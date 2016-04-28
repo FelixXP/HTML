@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 
+实现：
+将伪类after和before设置为absoulte，相对父元素定位
+作为书签开孔和书签挂线
+同时设置圆角框和背景
+点击书签，改变书签margin-top和挂线高度
+
+PS：IE下效果无法实现
+ -->
+
+	<meta charset="utf-8">
+	<title>书签挂件效果</title>
+	<script type="text/javascript" src='http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js'></script>
+   <style>
+	.tab-wrap{
+	    /*background-color: #ccc;*/
+	    margin-top:2em;
+	    box-shadow: 0 -2px 3px #ccc;
+	    min-width:430px;
+	}
+
+	.tab-wrap ul{
+	    height:100px;
+	    text-align:center;
+	}
+
+	.tab-wrap ul li{
+	    position: relative;
+	    vertical-align: top;
+	    display: inline-block;
+	    margin:1em;
+	    min-height: 5em;
+	    font-size:1em;
+	    width:1em;
+	    padding:55px 25px 10px 25px;
+	    background-color: #F5F4EF;
+	    color:#333;
+	    font-family: 'Kaiti', Georgia, Serif;
+	    border-radius: 5px;
+	    word-wrap:break-word;
+	    word-break:normal;
+	    -webkit-background-size:50px auto;
+	    background-size: 50px auto;
+	    background-position: 8px -3px;
+	    background-repeat:no-repeat;
+	    box-shadow: 0 0 5px #666;
+	    cursor:pointer;
+	}
+
+	.tab-wrap ul li:hover{
+	    box-shadow:0 0 5px brown;
+	}
+
+	.tab-wrap ul li:before{
+	    content:"";
+	    font-size: .5em;
+	    position: absolute;
+	    top:-16px;
+	    left:32px;
+	    height:25px;
+	    width:2px;
+	    background-color: #EEB860;
+	}
+
+	.tab-wrap ul li:after{
+	    content:"●";
+	    position: absolute;
+	    top:2px;
+	    font-size:12px;
+	    left:27px;
+	    color:white;
+	}
+
+
+	.tab-wrap .tab-video{
+	    background-image:url("./icon-video.png");
+	}
+
+	.tab-wrap .tab-paper{
+	    background-image:url("./icon-paper.png");
+	}
+	.tab-wrap .tab-ppt{
+	    background-image:url("./icon-ppt.png");
+	}
+	.tab-wrap .tab-ebook{
+	    background-image:url("./icon-ebook.png");
+	}
+
+
+	.tab-wrap .tab-choose{
+	    margin-top:2em;
+	    box-shadow: 0 0 4px #5BAEFF;
+	}
+
+	.tab-wrap .tab-choose:before{
+	    top:-32px;
+	    height:41px;
+	    box-shadow: 0 0 3px #5BAEFF;
+	}
+
+	.tab-wrap .tab-choose:hover{
+	    box-shadow: 0 0 2px #5BAEFF;
+	}
+   </style>
+</head>
+
+<body>
+
+<div class="tab-wrap">
+    <ul>
+        <li class="tab-video" data-box="box-video">教学录像</li>
+        <li class="tab-ppt" data-box="box-ppt">P P T</li>
+        <li class="tab-paper" data-box="box-paper">往年试卷</li>
+        <li class="tab-ebook" data-box="box-ebook">电子教材</li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+
+
+/*
+* clickSwitch(current,choose,clName)点击切换类
+* current当前选择 choose新点击 clName切换的类名
+* 新点击与当前不一样的时候切换类名
+* */
+function clickSwitch(current,choose,clName){
+    var currentData,chooseData;
+    if(current.val()){
+        currentData = current.val();
+        chooseData = choose.val();
+    }else{
+        currentData = current.html();
+        chooseData = choose.html();
+    }
+    if(currentData !== chooseData){
+        current.removeClass(clName);
+        choose.addClass(clName);
+    }
+    return false;
+}
+
+
+$(document).ready(function(){
+    $(".tab-wrap ul li").click(function(){
+        var currentTab = $(".tab-choose");
+        var chooseTab = $(this);
+        clickSwitch(currentTab,chooseTab,"tab-choose");
+    });
+});
+</script>
+</body>
+</html>
